@@ -12,6 +12,8 @@ defmodule Petri.Server do
 
   def show() do
     GenServer.call(:petri, :show)
+    |> Grid.show()
+    |> IO.puts()
   end
 
   @impl true
