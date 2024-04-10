@@ -3,9 +3,9 @@ defmodule Spring.Cell do
   def show(state) do
     # match state to true of false
     if state == true do
-      IO.puts("X")
+      IO.write("X")
     else
-      IO.puts("O")
+      IO.write("O")
     end
   end
 

@@ -6,12 +6,27 @@ defmodule Spring.Grid do
   end
 
   def evolve(grid) do
-
-    Enum.reduce(grid, %{}, fn {{rr, cc}, state}, acc ->
-      n_count =  for r <- (rr - 1)..(rr + 1), c <- (cc - 1)..(cc + 1), {r, c} != {rr, cc}, do: Map.get(grid, {r, c}, false)
+    Enum.map(grid, fn {{rr, cc}, state} ->
+      n_count = get_count(grid, rr, cc)
       new_state = Spring.Cell.evolve(state, n_count)
-      Map.put(acc, {rr, cc}, new_state)
+      {{rr, cc}, new_state}
     end)
+    |> Map.new()
+  end
+
+  def get_count(grid, rr, cc) do
+    l = for r <- (rr - 1)..(rr + 1), c <- (cc - 1)..(cc + 1), {r, c} != {rr, cc}, do: Map.get(grid, {r, c}, false)
+    Enum.count(l, fn cell -> cell end)
+  end
+
+  def show(grid) do
+    for r <- 1..6 do
+      for c <- 1..6 do
+        Spring.Cell.show(Map.get(grid, {r, c}, false))
+      end
+      IO.puts("")
+    end
+
   end
 
 end
