@@ -2,7 +2,8 @@ defmodule Petri.Server do
   use GenServer
   alias Petri.Grid
 
-  def start_link() do
+  def start_link(_input) do
+    IO.puts("Starting Petri.Server")
     GenServer.start_link(__MODULE__, :unused, name: :petri)
   end
 
