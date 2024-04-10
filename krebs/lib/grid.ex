@@ -1,5 +1,5 @@
+# offset, new project snowflake --sup
 defmodule Krebs.Grid do
-
   @height 20
   @width 20
 
