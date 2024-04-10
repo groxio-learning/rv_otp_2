@@ -3,29 +3,33 @@ defmodule Petri.Grid do
   A grid of cells in a Petri game.
   """
 
-  def new(width \\ 20, height \\ 20) do
+  def new(width \\ 10, height \\ 10) do
     for x <- 1..width, y <- 1..height, into: %{} do
       {{x, y}, Enum.random([true, false])}
     end
   end
 
-  def evolve(grid) do
-    "function"
+  def count_neighbors(grid, {x, y}) do
+    for xx <- (x - 1)..(x + 1),
+        yy <- (y - 1)..(y + 1),
+        {x, y} != {xx, yy} do
+      Map.get(grid, {xx, yy}, false)
+    end
+    |> Enum.count(fn cell -> cell end)
   end
 
-  def get_neighbors(grid) do
-    x = 1
-    y = 1
-
-    for x <- (xx - 1)..(xx + 1),
-        y <- (yy - 1)..(yy + 1),
-        {x, y} != {xx, yy},
-        do: Map.get(grid, {x, y}, false)
+  def evolve(grid) do
+    grid
+    |> Enum.map(fn {{x, y}, cell} ->
+      {{x, y}, Petri.Cell.next_gen(cell, count_neighbors(grid, {x, y}))}
+    end)
+    |> Enum.into(%{})
   end
 
   def show(grid) do
     grid
-    |> Enum.chunk_every(20)
+    |> Enum.sort()
+    |> Enum.chunk_every(10)
     |> Enum.map(&show_row/1)
     |> Enum.join("\n")
     |> IO.puts()
