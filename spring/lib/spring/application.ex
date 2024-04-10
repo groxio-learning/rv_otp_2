@@ -4,12 +4,14 @@ defmodule Spring.Application do
   @moduledoc false
 
   use Application
+  alias Spring.Server
 
   @impl true
   def start(_type, _args) do
     children = [
       # Starts a worker by calling: Spring.Worker.start_link(arg)
       # {Spring.Worker, arg}
+      Server
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -1,11 +1,11 @@
 defmodule Spring.Cell do
 
-  def show(state) do
+  def get_status(state) do
     # match state to true of false
     if state == true do
-      IO.write("X")
+      "X"
     else
-      IO.write("O")
+      "O"
     end
   end
 
