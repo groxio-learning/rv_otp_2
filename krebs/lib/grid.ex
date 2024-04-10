@@ -1,5 +1,5 @@
+# offset, new project snowflake --sup
 defmodule Krebs.Grid do
-
   @height 20
   @width 20
 
@@ -28,6 +28,7 @@ defmodule Krebs.Grid do
     for r <- (rr - 1)..(rr + 1), c <- (cc - 1)..(cc + 1), {r, c} != {rr, cc} do
       Map.get(board, {r, c}, false)
     end
+    |> Enum.count(fn x -> x end)
     |> Krebs.Cell.next_gen(board[coordinates])
   end
 end
